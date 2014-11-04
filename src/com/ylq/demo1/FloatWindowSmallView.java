@@ -1,14 +1,12 @@
 package com.ylq.demo1;
 
-import java.io.File;
 import java.lang.reflect.Field;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.ViewById;
 
-import com.example.easyandutilsdemo.R;
-
-import android.R.integer;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +16,9 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.easyandutilsdemo.R;
+
+@EViewGroup(R.layout.float_window_small)
 public class FloatWindowSmallView extends LinearLayout {
 
 	/**
@@ -38,8 +39,9 @@ public class FloatWindowSmallView extends LinearLayout {
 
 	/** 
      * 用于更新小悬浮窗的位置 
-     */  
-	private WindowManager windowManager;
+     */
+	@SystemService
+	WindowManager windowManager;
 	
 	/** 
      * 小悬浮窗的参数 
@@ -69,21 +71,24 @@ public class FloatWindowSmallView extends LinearLayout {
      * 记录手指按下时在小悬浮窗的View上的纵坐标的值 
      */  
 	private float yInView;
+	
+	@ViewById(R.id.small_window_layout)
+	LinearLayout view;
+	
+	@AfterViews
+	void init()
+	{
+		viewWidth = view.getLayoutParams().width;
+		viewHeight = view.getLayoutParams().height;
+		percentView.setText("");
+	}
 
+	@ViewById(R.id.percent)
+	TextView percentView;
 	public FloatWindowSmallView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		windowManager = (WindowManager)
-				context.getSystemService(Context.WINDOW_SERVICE);
-		LayoutInflater.from(context).inflate(R.layout.float_window_small, this);
-		
-		View view = findViewById(R.id.small_window_layout);
-		
-		viewWidth = view.getLayoutParams().width;
-		viewHeight = view.getLayoutParams().height;
-		TextView percentView = (TextView)findViewById(R.id.percent);
-		percentView.setText("");
-		
+
 	}
 
 	@Override

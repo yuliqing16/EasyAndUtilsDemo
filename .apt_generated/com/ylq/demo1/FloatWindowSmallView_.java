@@ -6,10 +6,9 @@
 package com.ylq.demo1;
 
 import android.content.Context;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.example.easyandutilsdemo.R.id;
 import com.example.easyandutilsdemo.R.layout;
 import org.androidannotations.api.view.HasViews;
@@ -25,21 +24,21 @@ import org.androidannotations.api.view.OnViewChangedNotifier;
  * 
  */
 @SuppressWarnings("unused")
-public final class FloatWindowBigView_
-    extends FloatWindowBigView
+public final class FloatWindowSmallView_
+    extends FloatWindowSmallView
     implements HasViews, OnViewChangedListener
 {
 
     private boolean alreadyInflated_ = false;
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
 
-    public FloatWindowBigView_(Context context) {
+    public FloatWindowSmallView_(Context context) {
         super(context);
         init_();
     }
 
-    public static FloatWindowBigView build(Context context) {
-        FloatWindowBigView_ instance = new FloatWindowBigView_(context);
+    public static FloatWindowSmallView build(Context context) {
+        FloatWindowSmallView_ instance = new FloatWindowSmallView_(context);
         instance.onFinishInflate();
         return instance;
     }
@@ -55,7 +54,7 @@ public final class FloatWindowBigView_
     public void onFinishInflate() {
         if (!alreadyInflated_) {
             alreadyInflated_ = true;
-            inflate(getContext(), layout.float_window_big, this);
+            inflate(getContext(), layout.float_window_small, this);
             onViewChangedNotifier_.notifyViewChanged(this);
         }
         super.onFinishInflate();
@@ -64,45 +63,15 @@ public final class FloatWindowBigView_
     private void init_() {
         OnViewChangedNotifier previousNotifier = OnViewChangedNotifier.replaceNotifier(onViewChangedNotifier_);
         OnViewChangedNotifier.registerOnViewChangedListener(this);
+        windowManager = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE));
         OnViewChangedNotifier.replaceNotifier(previousNotifier);
     }
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        view = ((LinearLayout) hasViews.findViewById(id.big_window_layout));
-        back = ((Button) hasViews.findViewById(id.back));
-        close = ((Button) hasViews.findViewById(id.close));
-        {
-            View view = hasViews.findViewById(id.back);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        FloatWindowBigView_.this.backClick();
-                    }
-
-                }
-                );
-            }
-        }
-        {
-            View view = hasViews.findViewById(id.close);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        FloatWindowBigView_.this.closeClick();
-                    }
-
-                }
-                );
-            }
-        }
-        AfterView();
+        percentView = ((TextView) hasViews.findViewById(id.percent));
+        view = ((LinearLayout) hasViews.findViewById(id.small_window_layout));
+        init();
     }
 
 }

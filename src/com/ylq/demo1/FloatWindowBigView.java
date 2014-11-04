@@ -1,6 +1,11 @@
 package com.ylq.demo1;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.EViewGroup;
+import org.androidannotations.annotations.RootContext;
+import org.androidannotations.annotations.ViewById;
 
 import com.example.easyandutilsdemo.R;
 
@@ -22,39 +27,46 @@ public class FloatWindowBigView extends LinearLayout{
      */ 
 	public static int viewHeight;
 	
-	public FloatWindowBigView(final Context context) {
-		super(context);
-		// TODO Auto-generated constructor stub
-		LayoutInflater.from(context).inflate(R.layout.float_window_big, this);
-		
-		View view = findViewById(R.id.big_window_layout);
+	public Context mContext;
+	
+	@ViewById(R.id.big_window_layout)
+	LinearLayout view;
+	
+	@ViewById
+	Button close;
+	
+	@Click(R.id.close)
+	void closeClick()
+	{
+        MyWindowManager.removeBigWindow(mContext);  
+        MyWindowManager.removeSmallWindow(mContext);  
+        Intent intent = new Intent(getContext(), FloatWindowService_.class);  
+        mContext.stopService(intent); 
+	}
+	
+	@Click(R.id.back)
+	void backClick()
+	{
+        // 点击返回的时候，移除大悬浮窗，创建小悬浮窗  
+        MyWindowManager.removeBigWindow(mContext);  
+        MyWindowManager.createSmallWindow(mContext);  
+	}
+	
+	@ViewById
+	Button back;
+	
+	@AfterViews
+	void AfterView()
+	{
 		viewWidth = view.getLayoutParams().width;
 		viewHeight = view.getLayoutParams().height;
+	}
+	
+	
+	public FloatWindowBigView(final Context context) {
+		super(context);
 		
-		Button close = (Button)findViewById(R.id.close);
-		Button back = (Button)findViewById(R.id.back);
-		
-		close.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-                // 点击关闭悬浮窗的时候，移除所有悬浮窗，并停止Service  
-                MyWindowManager.removeBigWindow(context);  
-                MyWindowManager.removeSmallWindow(context);  
-                Intent intent = new Intent(getContext(), FloatWindowService_.class);  
-                context.stopService(intent); 
-			}
-		});
-		
-		back.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-                // 点击返回的时候，移除大悬浮窗，创建小悬浮窗  
-                MyWindowManager.removeBigWindow(context);  
-                MyWindowManager.createSmallWindow(context);  
-			}
-		});
+		mContext = context;
 	}
 	
 

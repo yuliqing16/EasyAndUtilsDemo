@@ -53,7 +53,7 @@ public class MyWindowManager {
     	
     	if (smallWindow == null) 
     	{
-    		smallWindow = new FloatWindowSmallView(context);
+    		smallWindow = FloatWindowSmallView_.build(context);
     		if (smallWindowParams == null) 
     		{
     			smallWindowParams = new LayoutParams();
@@ -98,7 +98,7 @@ public class MyWindowManager {
         int screenWidth = windowManager.getDefaultDisplay().getWidth();  
         int screenHeight = windowManager.getDefaultDisplay().getHeight();  
         if (bigWindow == null) {  
-            bigWindow = new FloatWindowBigView(context);  
+            bigWindow = FloatWindowBigView_.build(context);  
             if (bigWindowParams == null) {  
                 bigWindowParams = new LayoutParams();  
                 bigWindowParams.x = screenWidth / 2 - FloatWindowBigView.viewWidth / 2;  
