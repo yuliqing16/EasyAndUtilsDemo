@@ -35,12 +35,12 @@ public final class EBeanTest_
 
     private void init_() {
         OnViewChangedNotifier.registerOnViewChangedListener(this);
+        context = context_;
         if (context_ instanceof MainActivity) {
             activity = ((MainActivity) context_);
         } else {
             Log.w("EBeanTest_", (("Due to Context class "+ context_.getClass().getSimpleName())+", the @RootContext MainActivity won't be populated"));
         }
-        context = context_;
         doSomethingAfterInject();
     }
 

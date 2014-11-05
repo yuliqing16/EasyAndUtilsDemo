@@ -7,11 +7,7 @@ import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 
 import com.ylq.demo1.FloatWindowService_;
-
-
-
-
-
+import com.ylq.demo2.Demo2Activity_;
 
 
 import android.app.Activity;
@@ -79,7 +75,7 @@ public class MainActivity extends Activity {
 	ListView list;
 	
 	String [] buttons ={"1.360手机卫士悬浮窗效果", 
-						"1.two"}; 
+						"1.模仿人人侧滑"}; 
 	
 	@ItemClick(R.id.list)
 	public void click(int position)
@@ -92,7 +88,7 @@ public class MainActivity extends Activity {
 		break;
 		case 2:
 		{
-			FloatWindowService_.intent(this).stop();
+			Demo2Activity_.intent(this).start();
 		}
 		break;
 		default:

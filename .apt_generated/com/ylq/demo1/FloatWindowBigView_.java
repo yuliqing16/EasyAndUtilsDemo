@@ -69,8 +69,8 @@ public final class FloatWindowBigView_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        view = ((LinearLayout) hasViews.findViewById(id.big_window_layout));
         back = ((Button) hasViews.findViewById(id.back));
+        view = ((LinearLayout) hasViews.findViewById(id.big_window_layout));
         close = ((Button) hasViews.findViewById(id.close));
         {
             View view = hasViews.findViewById(id.back);

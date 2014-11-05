@@ -28,6 +28,7 @@
         
         <activity android:name="com.example.easyandutilsdemo.MainActivity2_"/>
         <service android:name="com.ylq.demo1.FloatWindowService_"/>
+        <activity android:name="com.ylq.demo2.Demo2Activity_"/>
     </application>
 
 </manifest>
