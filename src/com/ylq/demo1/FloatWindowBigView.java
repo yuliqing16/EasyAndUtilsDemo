@@ -2,19 +2,15 @@ package com.ylq.demo1;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.EViewGroup;
-import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.ViewById;
-
-import com.example.easyandutilsdemo.R;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import com.example.easyandutilsdemo.R;
 
 @EViewGroup(R.layout.float_window_big)
 public class FloatWindowBigView extends LinearLayout{

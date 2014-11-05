@@ -1,13 +1,13 @@
 package com.ylq.demo2;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import android.app.Activity;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -97,6 +97,8 @@ public class Demo2Activity extends Activity implements OnTouchListener{
 		// 将contentde宽度设置为屏幕宽度
 		content.getLayoutParams().width = screenWidth;
 		content.setOnTouchListener(this);
+		
+
 		
 	}
 	
@@ -219,13 +221,14 @@ public class Demo2Activity extends Activity implements OnTouchListener{
      */  
 	private void scrollToMenu()
 	{
-		 new ScrollTask().execute(30);  
+		slid(25);
 	}
     /** 
      * 将屏幕滚动到content界面，滚动速度设定为-30. 
      */  
-    private void scrollToContent() {  
-        new ScrollTask().execute(-30);  
+    private void scrollToContent() 
+    {  
+    	slid(-25);
     }  
     
     /** 
@@ -249,63 +252,52 @@ public class Demo2Activity extends Activity implements OnTouchListener{
     	mVelocityTracker = null;
     }
     
-    class ScrollTask extends AsyncTask<Integer, Integer, Integer>
+    @Background
+    void slid(int speed)
     {
-
-		@Override
-		protected Integer doInBackground(Integer... params) {
-			// TODO Auto-generated method stub
-			int leftMargin = menuParams.leftMargin;
-			// 根据传入的速度来滚动界面，当滚动到达左边界或右边界时，跳出循环。  
-			while (true)
+    	int leftMargin = menuParams.leftMargin;
+		// 根据传入的速度来滚动界面，当滚动到达左边界或右边界时，跳出循环。  
+		while (true)
+		{
+			leftMargin = leftMargin + speed;
+			if (leftMargin > rightEdge) 
 			{
-				leftMargin = leftMargin + params[0];
-				if (leftMargin > rightEdge) {
-					leftMargin = rightEdge;
-					break;
-				}
-				if (leftMargin < leftEdge) {
-					leftMargin = leftEdge;
-					break;
-				}
-				publishProgress(leftMargin);
-				// 为了要有滚动效果产生，每次循环使线程睡眠20毫秒，这样肉眼才能够看到滚动动画。
-				try {
-					Thread.sleep(20);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-			if (params[0] > 0) {
-				isMenuVisible = true;
-				Log.d("speed", "true:"+params[0]);
-			}
-			else {
-				isMenuVisible = false;
-				Log.d("speed", "false:"+params[0]);
+				menuParams.leftMargin = rightEdge;
+				break;
 			}
 			
-			return leftMargin;
-		}
-
-		@Override
-		protected void onPostExecute(Integer result) {
-			// TODO Auto-generated method stub
-			menuParams.leftMargin = result;
-			menu.setLayoutParams(menuParams);
+			if (leftMargin < leftEdge) 
+			{
+				menuParams.leftMargin = leftEdge;
+				break;
+			}
 			
+			menuParams.leftMargin = leftMargin;
+			SetUi();
+			// 为了要有滚动效果产生，每次循环使线程睡眠20毫秒，这样肉眼才能够看到滚动动画。
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
-
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
-			menuParams.leftMargin  = values[0];
-			menu.setLayoutParams(menuParams);
+		
+		if (speed > 0) {
+			isMenuVisible = true;
 		}
-    	
+		else {
+			isMenuVisible = false;
+		}
+		
+		SetUi();
+    }
+    
+    @UiThread
+    void SetUi()
+    {
+    	menu.setLayoutParams(menuParams);
     }
 	
 }

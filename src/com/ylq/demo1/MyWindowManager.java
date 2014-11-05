@@ -3,8 +3,6 @@ package com.ylq.demo1;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-import com.example.easyandutilsdemo.R;
-
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.PixelFormat;
@@ -12,6 +10,8 @@ import android.view.Gravity;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.TextView;
+
+import com.example.easyandutilsdemo.R;
 
 public class MyWindowManager {
 	/** 

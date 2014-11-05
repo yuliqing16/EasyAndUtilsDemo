@@ -2,22 +2,15 @@ package com.example.easyandutilsdemo;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 
+import android.app.Activity;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import com.ylq.demo1.FloatWindowService_;
 import com.ylq.demo2.Demo2Activity_;
-
-
-
-import android.app.Activity;
-import android.content.Intent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
