@@ -7,6 +7,7 @@ import org.androidannotations.annotations.ViewById;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -129,6 +130,7 @@ public class Demo2Activity extends Activity implements OnTouchListener{
 			// 手指移动时，对比按下时的横坐标，计算出移动的距离，来调整menu的leftMargin值，从而显示和隐藏menu  
 			xMove = event.getRawX();
 			int distanceX = (int)(xMove - xDown);
+			
 			if (isMenuVisible) {
 				menuParams.leftMargin = distanceX;
 			}
@@ -142,6 +144,7 @@ public class Demo2Activity extends Activity implements OnTouchListener{
 			else if (menuParams.leftMargin > rightEdge){
 				menuParams.leftMargin = rightEdge;
 			}
+			
 			menu.setLayoutParams(menuParams);
 			break;
 		case MotionEvent.ACTION_UP:
@@ -277,9 +280,11 @@ public class Demo2Activity extends Activity implements OnTouchListener{
 			}
 			if (params[0] > 0) {
 				isMenuVisible = true;
+				Log.d("speed", "true:"+params[0]);
 			}
 			else {
 				isMenuVisible = false;
+				Log.d("speed", "false:"+params[0]);
 			}
 			
 			return leftMargin;
