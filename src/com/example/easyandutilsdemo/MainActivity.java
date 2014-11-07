@@ -11,6 +11,8 @@ import android.widget.ListView;
 
 import com.ylq.demo1.FloatWindowService_;
 import com.ylq.demo2.Demo2Activity_;
+import com.ylq.demo3.Demo3Activity;
+import com.ylq.demo3.Demo3Activity_;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
@@ -69,7 +71,8 @@ public class MainActivity extends Activity {
 	ListView list;
 	
 	String [] buttons ={"1.360手机卫士悬浮窗效果", 
-						"1.模仿人人侧滑"}; 
+						"2.模仿人人侧滑",
+						"3.一分钟实现侧滑"}; 
 	
 	@ItemClick(R.id.list)
 	public void click(int position)
@@ -85,6 +88,10 @@ public class MainActivity extends Activity {
 			Demo2Activity_.intent(this).start();
 		}
 		break;
+		case 3:
+		{
+			Demo3Activity_.intent(this).start();
+		}
 		default:
 			break;
 		}
