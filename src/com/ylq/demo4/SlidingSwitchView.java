@@ -1,11 +1,16 @@
 package com.ylq.demo4;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.example.easyandutilsdemo.R;
 
 import android.R.bool;
 import android.R.integer;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -92,6 +97,12 @@ extends RelativeLayout implements OnTouchListener
 	public SlidingSwitchView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SlidingSwitcherView);
+		boolean isAutoPlay = a.getBoolean(R.styleable.SlidingSwitcherView_auto_play, false);
+		if (isAutoPlay) {
+			startAutoPlay();
+		}
+		a.recycle();
 	}
 
 	@Override
@@ -403,5 +414,88 @@ extends RelativeLayout implements OnTouchListener
         }  
     }  
 	
+    class ScrollToFirstItemTask extends AsyncTask<Integer, Integer, Integer>
+    {
 
+		@Override
+		protected Integer doInBackground(Integer... params) {
+			// TODO Auto-generated method stub
+			int leftMargin = firstItemParams.leftMargin;
+			while (true) {
+				leftMargin = leftMargin + params[0];
+				if (leftMargin > 0) {
+					leftMargin = 0;
+					break;
+				}
+				publishProgress(leftMargin);
+				sleep(20);
+			}
+			return leftMargin;
+		}
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			// TODO Auto-generated method stub
+			firstItemParams.leftMargin = values[0];
+			firstItem.setLayoutParams(firstItemParams);
+		}
+    	@Override
+    	protected void onPostExecute(Integer result) {
+    		// TODO Auto-generated method stub
+    		firstItemParams.leftMargin = result;
+			firstItem.setLayoutParams(firstItemParams);
+    	}
+    }
+    /**
+     * 滚动到第一个元素
+     */
+    public void scrollToFirstItem()
+    {
+    	new ScrollToFirstItemTask().execute(20 * itemsCount);
+    }
+    
+    /**
+     * 用于在定时器当中操作ui界面
+     */
+    private Handler handler = new Handler();
+    /**
+     * 开启图片自动播放功能，当滚动到最后一张图片当时候，会自动回滚到第一张
+     */
+    public void startAutoPlay()
+    {
+    	new Timer().schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				if (currentItemIdex == itemsCount - 1) {
+					currentItemIdex = 0;
+					handler.post(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							scrollToFirstItem();
+							refeshDotsLayout();
+						}
+					});
+				}
+				else {
+					currentItemIdex++;
+					handler.post(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							scrollToNext();
+							refeshDotsLayout();
+						}
+					});
+				}
+			}
+		}, 3000, 3000);
+    }
+    
+    
+    
+    
 }
