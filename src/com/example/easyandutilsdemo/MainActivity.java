@@ -5,14 +5,16 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 
+import com.ylq.demo1.FloatWindowService_;
+import com.ylq.demo2.Demo2Activity_;
+import com.ylq.demo3.Demo3Activity_;
+import com.ylq.demo4.Demo4Activity_;
+
 import android.app.Activity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.ylq.demo1.FloatWindowService_;
-import com.ylq.demo2.Demo2Activity_;
-import com.ylq.demo3.Demo3Activity;
-import com.ylq.demo3.Demo3Activity_;
+
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
@@ -72,7 +74,8 @@ public class MainActivity extends Activity {
 	
 	String [] buttons ={"1.360手机卫士悬浮窗效果", 
 						"2.模仿人人侧滑",
-						"3.一分钟实现侧滑"}; 
+						"3.一分钟实现侧滑",
+						"4.图片联播"}; 
 	
 	@ItemClick(R.id.list)
 	public void click(int position)
@@ -91,6 +94,10 @@ public class MainActivity extends Activity {
 		case 3:
 		{
 			Demo3Activity_.intent(this).start();
+		}
+		case 4:
+		{
+			Demo4Activity_.intent(this).start();
 		}
 		default:
 			break;

@@ -30,6 +30,7 @@
         <service android:name="com.ylq.demo1.FloatWindowService_"/>
         <activity android:name="com.ylq.demo2.Demo2Activity_"/>
         <activity android:name="com.ylq.demo3.Demo3Activity_"/>
+        <activity android:name="com.ylq.demo4.Demo4Activity_"/>
     </application>
 
 </manifest>
