@@ -9,6 +9,8 @@ import com.ylq.demo1.FloatWindowService_;
 import com.ylq.demo2.Demo2Activity_;
 import com.ylq.demo3.Demo3Activity_;
 import com.ylq.demo4.Demo4Activity_;
+import com.ylq.demo5.Demo5Activity_;
+
 
 import android.app.Activity;
 import android.widget.ArrayAdapter;
@@ -75,7 +77,8 @@ public class MainActivity extends Activity {
 	String [] buttons ={"1.360手机卫士悬浮窗效果", 
 						"2.模仿人人侧滑",
 						"3.一分钟实现侧滑",
-						"4.图片联播"}; 
+						"4.图片联播",
+						"5.联系人滑动固定"}; 
 	
 	@ItemClick(R.id.list)
 	public void click(int position)
@@ -95,10 +98,17 @@ public class MainActivity extends Activity {
 		{
 			Demo3Activity_.intent(this).start();
 		}
+		break;
 		case 4:
 		{
 			Demo4Activity_.intent(this).start();
 		}
+		break;
+		case 5:
+		{
+			Demo5Activity_.intent(this).start();
+		}
+		break;
 		default:
 			break;
 		}
